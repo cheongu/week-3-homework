@@ -1,14 +1,30 @@
-import React from "react";
-import Header from "../components/Header";
-import Layout from "../components/Layout";
-import Main from "../components/Main";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
-    <Layout>
-      <Header />
-      <Main />
-    </Layout>
+    <div>
+      <div>
+        <h1>무엇을 할까요?</h1>
+        <button
+          onClick={() => {
+            navigate("/write");
+          }}
+        >
+          할일 기록하기
+        </button>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            navigate("/detail");
+          }}
+        >
+          TODO LIST
+        </button>
+      </div>
+    </div>
   );
 };
 
