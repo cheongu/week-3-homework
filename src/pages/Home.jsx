@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <div>
       <div>
-        <h1>무엇을 할까요?</h1>
+        <h1 size="32">무엇을 할까요?</h1>
         <button
           onClick={() => {
             navigate("/write");
@@ -18,7 +18,7 @@ const Home = () => {
       <div>
         <button
           onClick={() => {
-            navigate("/detail");
+            navigate("/Detail");
           }}
         >
           TODO LIST
