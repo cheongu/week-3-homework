@@ -1,14 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { __getTodos } from "./redux/modules/todosSlice";
+import React, { useEffect, useState } from "react";
+import { __getTodos } from "../redux/modules/todosSlice";
+import axios from "axios";
 
 const Detail = () => {
-  const dispatch = useDispatch();
+  const [todos, setTodos] = useState(null);
+
+  const fetchTodos = async () => {
+    const { data } = await axios.get("http://localhost3001/todos");
+    setTodos(data);
+  };
 
   useEffect(() => {
-    dispatch(__getTodos());
-  }, [dispatch]);
+    fetchTodos();
+  }, []);
 
   const location = useLocation();
   console.log("location :>> ", location);
