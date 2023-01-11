@@ -1,30 +1,97 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {
-  todos: [],
-  isLoading: false,
-  error: null,
-};
-
-export const __getTodos = createAsyncThunk(
-  "todos/getTodos",
-  async (payload, thunkAPI) => {
+export const __addTodoThunk = createAsyncThunk(
+  "ADD_TODO",
+  async (arg, thunkAPI) => {
     try {
-      const data = await axios.get("http://localhost:3001/todos");
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+      const { data } = await axios.post(
+        `${"http://localhost:3001"}/todos`,
+        arg
+      );
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e);
     }
   }
 );
 
-export const todosSlice = createSlice({
+export const __deleteTodoThunk = createAsyncThunk(
+  "DELETE_TODO",
+  async (arg, thunkAPI) => {
+    try {
+      axios.delete(`${"http://localhost:3001"}/todos/${arg}`);
+      return thunkAPI.fulfillWithValue(arg);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
+export const __getTodosThunk = createAsyncThunk(
+  "GET_TODOS",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await axios.get(`${"http://localhost:3001"}/todos`);
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
+const initialState = {
+  todos: [],
+  error: null,
+  isLoading: false,
+  isSuccess: false,
+};
+
+export const todoSlice = createSlice({
   name: "todos",
   initialState,
-  reducers: {},
-  extraReducers: {}, // 새롭게 사용할 extraReducers를 꺼내볼까요?
+  reducers: {
+    clearTodo: (state, action) => {
+      state.isSuccess = false;
+    },
+  },
+  extraReducers: {
+    [__getTodosThunk.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.todos = action.payload;
+    },
+    [__getTodosThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [__getTodosThunk.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [__addTodoThunk.pending]: (state) => {
+      state.isSuccess = false;
+      state.isLoading = true;
+    },
+    [__addTodoThunk.fulfilled]: (state, action) => {
+      state.isSuccess = true;
+      state.isLoading = false;
+      state.todos.push(action.payload);
+    },
+    [__addTodoThunk.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    [__deleteTodoThunk.fulfilled]: (state, action) => {
+      const target = state.todos.findIndex(
+        (comment) => comment.id === action.payload
+      );
+
+      state.todos.splice(target, 1);
+    },
+    [__deleteTodoThunk.rejected]: () => {},
+    [__deleteTodoThunk.pending]: () => {},
+  },
 });
 
-export const {} = todosSlice.actions;
-export default todosSlice.reducer;
+export const { clearTodo } = todoSlice.actions;
+export default todoSlice.reducer;

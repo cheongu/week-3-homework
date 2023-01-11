@@ -1,20 +1,31 @@
-import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { clearTodo, __addTodoThunk } from "../redux/modules/todosSlice";
 
 const Write = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const $ = useSelector((state) => state.todos.$);
+  const isSuccess = useSelector((state) => state.todos.isSuccess);
   const [todo, setTodo] = useState({
     writer: "",
     title: "",
     body: "",
   });
 
+  useEffect(() => {
+    if (!isSuccess) return;
+    if (isSuccess) navigate("/List");
+
+    return () => dispatch(clearTodo());
+  }, [dispatch, isSuccess, navigate]);
+
   const onChangeHandler = (event) => {
-    alert("클릭");
+    const { name, value } = event.target;
+    setTodo({
+      ...todo,
+      [name]: value,
+    });
   };
 
   return (
@@ -29,6 +40,8 @@ const Write = () => {
           ) {
             return alert("모든 항목을 입력해주세요.");
           }
+          dispatch(__addTodoThunk(todo));
+          setTodo({ title: "", body: "", writer: "" });
         }}
       >
         <label>작성자</label>
@@ -36,7 +49,7 @@ const Write = () => {
           type="text"
           name="writer"
           placeholder="작성자의 이름을 입력해주세요. (5자 이내)"
-          value
+          value={todo.writer}
           onChange={onChangeHandler}
           maxLength={5}
         />
@@ -45,7 +58,7 @@ const Write = () => {
           type="text"
           name="title"
           placeholder="작성자의 이름을 입력해주세요. (5자 이내)"
-          value
+          value={todo.title}
           onChange={onChangeHandler}
         />
         <label>내용</label>
@@ -53,15 +66,13 @@ const Write = () => {
           type="text"
           name="body"
           placeholder="내용을 입력해주세요. (200자 이내)"
-          value
+          value={todo.body}
           onChange={onChangeHandler}
         />
         <div>
           <button>추가하기</button>
         </div>
       </form>
-
-      <Link to="/">home 페이지로 이동하기</Link>
     </div>
   );
 };

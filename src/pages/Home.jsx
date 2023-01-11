@@ -1,31 +1,40 @@
+import React from "react";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
-
+  const nagivate = useNavigate();
   return (
-    <div>
-      <div>
-        <h1 size="32">무엇을 할까요?</h1>
+    <StContainer>
+      <StMain>
+        <StText>무엇을 할까요?</StText>
         <button
+          type="button"
           onClick={() => {
-            navigate("/write");
+            nagivate("/Write");
           }}
         >
           할일 기록하기
         </button>
-      </div>
-      <div>
         <button
+          type="button"
           onClick={() => {
-            navigate("/Detail");
+            nagivate("/List");
           }}
         >
           TODO LIST
         </button>
-      </div>
-    </div>
+      </StMain>
+    </StContainer>
   );
 };
 
 export default Home;
+
+const StContainer = styled.div``;
+
+const StMain = styled.div``;
+
+const StText = styled.div``;
+
+const StFormLabel = styled.div``;
