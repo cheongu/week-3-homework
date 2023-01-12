@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { __getTodosThunk } from "../redux/modules/todosSlice";
 import TodoCard from "../components/TodoCard";
+import Layout from "../components/Layout";
 
 const List = () => {
   const dispatch = useDispatch();
@@ -13,18 +14,18 @@ const List = () => {
 
   if (todos.length === 0)
     return (
-      <div>
+      <Layout>
         <h2>할일이 없네요!</h2>
-      </div>
+      </Layout>
     );
 
   if (error) return <div>알수 없는 에러가 발생했습니다.</div>;
   return (
-    <div>
+    <Layout>
       {todos.map((todo) => (
         <TodoCard key={todo.id} todo={todo} />
       ))}
-    </div>
+    </Layout>
   );
 };
 export default List;

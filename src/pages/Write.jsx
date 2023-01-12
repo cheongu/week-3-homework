@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout";
 import { clearTodo, __addTodoThunk } from "../redux/modules/todosSlice";
 
 const Write = () => {
@@ -29,7 +31,7 @@ const Write = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -44,8 +46,8 @@ const Write = () => {
           setTodo({ title: "", body: "", writer: "" });
         }}
       >
-        <label>작성자</label>
-        <input
+        <label>작성자 </label>
+        <StInput
           type="text"
           name="writer"
           placeholder="작성자의 이름을 입력해주세요. (5자 이내)"
@@ -53,28 +55,48 @@ const Write = () => {
           onChange={onChangeHandler}
           maxLength={5}
         />
-        <label>제목</label>
-        <input
+        <label>제목 </label>
+        <StInput
           type="text"
           name="title"
-          placeholder="작성자의 이름을 입력해주세요. (5자 이내)"
+          placeholder="제목을 입력해주세요. (50자 이내)"
           value={todo.title}
           onChange={onChangeHandler}
+          maxLength={50}
         />
-        <label>내용</label>
-        <input
+        <label>내용 </label>
+        <StInput
           type="text"
           name="body"
           placeholder="내용을 입력해주세요. (200자 이내)"
           value={todo.body}
           onChange={onChangeHandler}
         />
-        <div>
-          <button>추가하기</button>
-        </div>
+        <button>추가하기</button>
       </form>
-    </div>
+    </Layout>
   );
 };
 
 export default Write;
+
+const StForm = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  -webkit-box-align: start;
+  align-items: start;
+  -webkit-box-pack: justify;
+  justify-content: flex-start;
+  flex-direction: column;
+`;
+
+const StInput = styled.input`
+  padding: 0 12px;
+  height: 90px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 12px;
+`;

@@ -7,6 +7,8 @@ import {
   __getTodoThunk,
   __updateTodoThunk,
 } from "../redux/modules/todoSlice";
+import Comments from "../comments/Comments";
+import Layout from "../components/Layout";
 
 const Detail = () => {
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ const Detail = () => {
   };
 
   return (
-    <div>
+    <Layout>
       {!isEditMode && (
         <div>
           id: ({todo?.id})
@@ -90,8 +92,8 @@ const Detail = () => {
           )}
         </div>
       </div>
-      {/* {!isEditMode && <Comments />} */}
-    </div>
+      {!isEditMode && <Comments />}
+    </Layout>
   );
 };
 

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { __deleteTodoThunk } from "../redux/modules/todosSlice";
+import Layout from "./Layout";
 
 const TodoCard = ({ todo }) => {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ const TodoCard = ({ todo }) => {
   };
 
   return (
-    <StCardBox
+    <div
       onClick={() => {
         navigate(`/Detail/${todo.id}`);
       }}
@@ -21,7 +22,8 @@ const TodoCard = ({ todo }) => {
       <StCard>
         <h2>{todo.title}</h2>
         <h5>작성자 : {todo.writer}</h5>
-        <button
+        <StButton
+          type="button"
           onClick={(event) => {
             event.stopPropagation();
             const result = window.confirm("이 할일을 지울까요?");
@@ -31,24 +33,39 @@ const TodoCard = ({ todo }) => {
               return;
             }
           }}
-        ></button>
+        >
+          삭제하기
+        </StButton>
       </StCard>
-    </StCardBox>
+    </div>
   );
 };
 export default TodoCard;
 
-const StCardBox = styled.div`
-  padding: 12px;
-  height: 90px;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  border-radius: 12px;
-  width: 100%;
-  margin-bottom: 12px;
-`;
+// const StCardBox = styled.div`
+//   display: flex;
+//   padding: 12px;
+//   height: 90px;
+//   border: 1px solid #ddd;
+//   background-color: #fff;
+//   border-radius: 12px;
+//   width: 100%;
+//   margin-bottom: 12px;
+// `;
 
 const StCard = styled.div`
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+`;
+
+const StButton = styled.button`
+  border: none;
+  height: 40px;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 140px;
+
+  font-weight: 700;
 `;
