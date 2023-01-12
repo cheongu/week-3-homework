@@ -6,7 +6,7 @@ export const __getComment = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `${"http://localhost:3001"}/comments/${arg}`
+        `${process.env.REACT_APP_TODOS}/comment/${arg}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {

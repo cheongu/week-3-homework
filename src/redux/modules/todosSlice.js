@@ -6,7 +6,7 @@ export const __addTodoThunk = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        `${"http://localhost:3001"}/todos`,
+        `${process.env.REACT_APP_TODOS}/todos`,
         arg
       );
       return thunkAPI.fulfillWithValue(data);
@@ -20,7 +20,7 @@ export const __deleteTodoThunk = createAsyncThunk(
   "DELETE_TODO",
   async (arg, thunkAPI) => {
     try {
-      axios.delete(`${"http://localhost:3001"}/todos/${arg}`);
+      axios.delete(`${process.env.REACT_APP_TODOS}/todos/${arg}`);
       return thunkAPI.fulfillWithValue(arg);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);
@@ -32,7 +32,7 @@ export const __getTodosThunk = createAsyncThunk(
   "GET_TODOS",
   async (_, thunkAPI) => {
     try {
-      const { data } = await axios.get(`${"http://localhost:3001"}/todos`);
+      const { data } = await axios.get(`${process.env.REACT_APP_TODOS}/todos`);
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.code);

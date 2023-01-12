@@ -6,7 +6,7 @@ export const __getTodoThunk = createAsyncThunk(
   async (arg, thunkAPI) => {
     try {
       const { data } = await axios.get(
-        `${"http://localhost:3001"}/todos/${arg}`
+        `${process.env.REACT_APP_TODOS}/todos/${arg}`
       );
       return thunkAPI.fulfillWithValue(data);
     } catch (e) {
@@ -19,7 +19,7 @@ export const __updateTodoThunk = createAsyncThunk(
   "UPDATE_TODO",
   async (arg, thunkAPI) => {
     try {
-      axios.patch(`${"http://localhost:3001"}/todos/${arg.id}`, arg);
+      axios.patch(`${process.env.REACT_APP_TODOS}/todos/${arg.id}`, arg);
       return thunkAPI.fulfillWithValue(arg);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
