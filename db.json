@@ -31,5 +31,12 @@
       "id": 5
     }
   ],
-  "commnets": []
+  "comments": [
+    {
+      "todoId": "5",
+      "username": "다시 1번",
+      "content": "1번입니다",
+      "id": 1
+    }
+  ]
 }

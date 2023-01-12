@@ -74,18 +74,10 @@ const Comment = ({ comment }) => {
             />
           </div>
           <div>
-            <button
-              size="small"
-              bgColor="#FE531F"
-              onClick={onCancelButtonHandler}
-            >
+            <button onClick={onCancelButtonHandler}>
               <h5>취소</h5>
             </button>
-            <button
-              size="small"
-              bgColor="#FE531F"
-              onClick={onUpdateButtonHandler}
-            >
+            <button onClick={onUpdateButtonHandler}>
               <h5>저장</h5>
             </button>
           </div>
@@ -99,14 +91,10 @@ const Comment = ({ comment }) => {
 
           <div>
             <button
-              size="small"
-              bgColor="#FE531F"
               disabled={isGlobalEditmode}
               onClick={onChangeEditButtonHandler}
             ></button>
             <button
-              size="small"
-              bgColor="#FE531F"
               onClick={onDeleteButtonHandler}
               disabled={isGlobalEditmode}
             ></button>
